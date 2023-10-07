@@ -3,17 +3,23 @@ const yargs = require('yargs');
 const fs = require('fs');
 const path = require('path');
 
+const isJsOrTs = require('../utils/isJsOrTs.cjs');
+
 function traverseDirectory(directoryPath) {
     const items = fs.readdirSync(directoryPath);
+    let count = 0;
     items.forEach((item) => {
         const itemPath = path.join(directoryPath, item);
         const stats = fs.statSync(itemPath);
         if (stats.isDirectory()) {
-            traverseDirectory(itemPath);
+            count += traverseDirectory(itemPath);
         } else {
             console.log('File:', itemPath);
+            console.log(isJsOrTs(fs.readFileSync(itemPath, 'utf-8')));
+            count++;
         }
     });
+    return count;
 }
 
 function fetchArgument() {
@@ -40,10 +46,20 @@ function validFilePath(path) {
 }
 
 function main() {
-    console.log('my cli');
+    console.log('start my cli...');
     const argv = fetchArgument();
-    console.log(validDirectoryPath(argv[0]));
-    const rootPath = argv[0] ? argv[0] : './';
+    if (!argv[0]) {
+        console.warn('argument is empty or null');
+        return;
+    }
+    if (!validDirectoryPath(argv[0])) {
+        console.warn('not valid directory path');
+        return;
+    }
+    const rootPath = argv[0];
+    console.log('start scan Directory:', rootPath);
+    const totalFileAmount = traverseDirectory(rootPath);
+    console.log('scan to', totalFileAmount, 'files');
 }
 
 module.exports = main();
