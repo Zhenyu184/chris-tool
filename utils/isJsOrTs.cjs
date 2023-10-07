@@ -3,12 +3,12 @@ function isJavascriptOrTypescript(content) {
     const tsKeywords = ['interface', 'type', 'namespace', 'implements', 'extends'];
     for (const keyword of jsKeywords) {
         if (content.includes(keyword)) {
-            return true; // Contains JavaScript keywords
+            return true;
         }
     }
     for (const keyword of tsKeywords) {
         if (content.includes(keyword)) {
-            return true; // Contains TypeScript keywords
+            return true;
         }
     }
     return false;
