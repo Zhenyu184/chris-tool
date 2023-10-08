@@ -1,5 +1,29 @@
+const fs = require('fs');
+const path = require('path');
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
-const { traverseDirectory, traverseForEach } = require('./cli.cjs');
+const deleteSignature = require('../handler/deleteSignature.cjs');
+
+function traverseDirectory(directoryPath, forEachFunction) {
+    const items = fs.readdirSync(directoryPath);
+    let count = 0;
+    items.forEach((item) => {
+        const itemPath = path.join(directoryPath, item);
+        const stats = fs.statSync(itemPath);
+        if (stats.isDirectory()) {
+            count += traverseDirectory(itemPath, forEachFunction);
+        } else {
+            // console.log('File:', itemPath);
+            forEachFunction(itemPath);
+            count++;
+        }
+    });
+    return count;
+}
+
+function traverseForEach(itemPath) {
+    deleteSignature(itemPath);
+    return 0;
+}
 
 function functionSwitch(argumentsArr) {
     if (!argumentsArr[0]) {
@@ -29,4 +53,5 @@ function functionSwitch(argumentsArr) {
     }
     return true;
 }
+
 exports.functionSwitch = functionSwitch;
