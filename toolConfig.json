@@ -1,13 +1,15 @@
 {
-    "server": {
-        "port": 3000,
-        "host": "localhost"
+    "debug": {
+        "handler": {
+            "clear": {
+                "searchString": ["Chris"],
+                "exclude": ["Christopher"]
+            }
+        }
     },
-    "database": {
-        "host": "db.example.com",
-        "port": 5432,
-        "username": "myuser",
-        "password": "mypassword",
-        "databaseName": "mydatabase"
+    "release": {
+        "handler": {
+            "clear": { "searchString": ["Chris.", "chris."] }
+        }
     }
 }
