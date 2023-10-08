@@ -4,8 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 const isJsOrTs = require('../utils/isJsOrTs.cjs');
-const validFilePath = require('../utils/validFilePath.cjs');
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
+const validFilePath = require('../utils/validFilePath.cjs');
+const signature = require('../handler/signature.cjs');
 
 function traverseDirectory(directoryPath, forEachFunction) {
     const items = fs.readdirSync(directoryPath);
@@ -16,8 +17,8 @@ function traverseDirectory(directoryPath, forEachFunction) {
         if (stats.isDirectory()) {
             count += traverseDirectory(itemPath, forEachFunction);
         } else {
-            console.log('File:', itemPath);
-            console.log(forEachFunction(itemPath));
+            // console.log('File:', itemPath);
+            forEachFunction(itemPath);
             count++;
         }
     });
@@ -25,6 +26,7 @@ function traverseDirectory(directoryPath, forEachFunction) {
 }
 
 function traverseForEach(itemPath) {
+    signature(itemPath);
     return isJsOrTs(fs.readFileSync(itemPath, 'utf-8'));
 }
 
@@ -34,17 +36,20 @@ function fetchArgument() {
 }
 
 function main() {
-    console.log('start my cli...');
+    console.log('start my cli');
     const argv = fetchArgument();
-    if (!argv[0]) {
+    const rootPath = argv[0];
+
+    if (!rootPath) {
         console.warn('argument is empty or null');
         return;
     }
-    if (!validDirectoryPath(argv[0])) {
+
+    if (!validDirectoryPath(rootPath)) {
         console.warn('not valid directory path');
         return;
     }
-    const rootPath = argv[0];
+
     console.log('start scan Directory:', rootPath);
     const totalFileAmount = traverseDirectory(rootPath, traverseForEach);
     console.log('scan to', totalFileAmount, 'files');
