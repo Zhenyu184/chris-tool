@@ -1,12 +1,12 @@
 const fs = require('fs');
 
-function validFilePath(path) {
+function validDirectoryPath(path) {
     try {
         const stats = fs.statSync(path);
-        return stats.isFile();
+        return stats.isDirectory();
     } catch (error) {
         return false;
     }
 }
 
-module.exports = validFilePath;
+module.exports = validDirectoryPath;

@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const isJsOrTs = require('../utils/isJsOrTs.cjs');
+const validFilePath = require('../utils/validFilePath.cjs');
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
-const validDirectoryPath = require('../utils/validFilePath.cjs');
 
 function traverseDirectory(directoryPath, forEachFunction) {
     const items = fs.readdirSync(directoryPath);
@@ -40,7 +40,6 @@ function main() {
         console.warn('argument is empty or null');
         return;
     }
-    console.log(validDirectoryPath(argv[0]));
     if (!validDirectoryPath(argv[0])) {
         console.warn('not valid directory path');
         return;
