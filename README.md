@@ -1,6 +1,10 @@
 # chris-tool
 
+```
+chris clear <path>
+```
 
-```
-myCli 
-```
+### Windows PowerSell issueS
+
+https://israynotarray.com/other/20200510/1067127387/
+or please use cmd....

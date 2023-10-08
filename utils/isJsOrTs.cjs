@@ -1,17 +1,14 @@
-function isJavascriptOrTypescript(content) {
-    const jsKeywords = ['function', 'const', 'let', 'var', 'if', 'else', 'for', 'while', 'class', '=>', 'import', 'export'];
-    const tsKeywords = ['interface', 'type', 'namespace', 'implements', 'extends'];
-    for (const keyword of jsKeywords) {
-        if (content.includes(keyword)) {
-            return true;
-        }
-    }
-    for (const keyword of tsKeywords) {
-        if (content.includes(keyword)) {
-            return true;
-        }
-    }
-    return false;
+const jsFileExtension = ['js', 'ts', 'cjs', 'mjs', 'jsx', 'vue', 'es6'];
+
+function extractFileExtension(filePath) {
+    const regex = /\.[0-9a-z]+$/i;
+    const match = filePath.match(regex);
+    return match ? match[0].slice(1) : null;
 }
 
-module.exports = isJavascriptOrTypescript;
+function isJsExtension(filePath) {
+    const extension = extractFileExtension(filePath);
+    return jsFileExtension.includes(extension);
+}
+
+module.exports = isJsExtension;

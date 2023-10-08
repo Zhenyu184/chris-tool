@@ -3,10 +3,13 @@ const yargs = require('yargs');
 const fs = require('fs');
 const path = require('path');
 
+// utils
 const isJsOrTs = require('../utils/isJsOrTs.cjs');
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
 const validFilePath = require('../utils/validFilePath.cjs');
-const signature = require('../handler/signature.cjs');
+
+// handler
+const deleteSignature = require('../handler/deleteSignature.cjs');
 
 function traverseDirectory(directoryPath, forEachFunction) {
     const items = fs.readdirSync(directoryPath);
@@ -26,8 +29,37 @@ function traverseDirectory(directoryPath, forEachFunction) {
 }
 
 function traverseForEach(itemPath) {
-    signature(itemPath);
-    return isJsOrTs(fs.readFileSync(itemPath, 'utf-8'));
+    deleteSignature(itemPath);
+    return 0;
+}
+
+function functionSwitch(argumentsArr) {
+    if (!argumentsArr[0]) {
+        console.warn('main argument is empty or null');
+        return false;
+    }
+
+    const mainFunction = argumentsArr[0].toLowerCase();
+
+    switch (mainFunction) {
+        case 'clear':
+            const rootPath = argumentsArr[1];
+            if (!rootPath) {
+                console.warn('not valid directory path');
+                return;
+            }
+            if (!validDirectoryPath(rootPath)) {
+                console.warn('not valid directory path');
+                return;
+            }
+            const totalFileAmount = traverseDirectory(rootPath, traverseForEach);
+            console.log('scan to', totalFileAmount, 'files');
+            break;
+        default:
+            console.log(`sorry ${mainFunction} is not legal main function`);
+            return false;
+    }
+    return true;
 }
 
 function fetchArgument() {
@@ -38,21 +70,7 @@ function fetchArgument() {
 function main() {
     console.log('start my cli');
     const argv = fetchArgument();
-    const rootPath = argv[0];
-
-    if (!rootPath) {
-        console.warn('argument is empty or null');
-        return;
-    }
-
-    if (!validDirectoryPath(rootPath)) {
-        console.warn('not valid directory path');
-        return;
-    }
-
-    console.log('start scan Directory:', rootPath);
-    const totalFileAmount = traverseDirectory(rootPath, traverseForEach);
-    console.log('scan to', totalFileAmount, 'files');
+    return functionSwitch(argv);
 }
 
 module.exports = main();
