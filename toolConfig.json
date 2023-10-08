@@ -9,7 +9,10 @@
     },
     "release": {
         "handler": {
-            "clear": { "searchString": ["Chris.", "chris."] }
+            "clear": {
+                "searchString": ["Chris"],
+                "exclude": ["Christopher"]
+            }
         }
     }
 }

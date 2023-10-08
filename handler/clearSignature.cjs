@@ -26,14 +26,18 @@ function searchString(sourceString) {
     return false;
 }
 
+function filterComment(sourceFileContent) {
+    const commentPattern = /\/\*[\s\S]*?\*\/|\/\/.*/g; //註解
+    return sourceFileContent.match(commentPattern);
+}
+
 function clearSignature(itemPath) {
     // console.log(content);
     if (isJsOrTs(itemPath)) {
-        const content = fs.readFileSync(itemPath, 'utf-8');
-        const commentPattern = /\/\*[\s\S]*?\*\/|\/\/.*/g; //註解
-        const comments = content.match(commentPattern);
-        if (comments) {
-            comments.forEach((element) => {
+        const fileContent = fs.readFileSync(itemPath, 'utf-8');
+        const commentArr = filterComment(fileContent);
+        if (commentArr) {
+            commentArr.forEach((element) => {
                 if (searchString(element)) {
                     console.log(element);
                 }

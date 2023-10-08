@@ -1,6 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const clearSignature = require('../handler/clearSignature.cjs');
+const file = require('../utils/fileOperations.cjs');
+
+function traverseForEach(itemPath) {
+    clearSignature(itemPath);
+    return 0;
+}
 
 function traverseDirectory(directoryPath) {
     const items = fs.readdirSync(directoryPath);
@@ -19,9 +25,5 @@ function traverseDirectory(directoryPath) {
     return count;
 }
 
-function traverseForEach(itemPath) {
-    clearSignature(itemPath);
-    return 0;
-}
-
+file.createFile('../tmp/aaa.tmp');
 module.exports = traverseDirectory;
