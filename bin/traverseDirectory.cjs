@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const deleteSignature = require('../handler/deleteSignature.cjs');
+const clearSignature = require('../handler/clearSignature.cjs');
 
 function traverseDirectory(directoryPath) {
     const items = fs.readdirSync(directoryPath);
@@ -20,7 +20,7 @@ function traverseDirectory(directoryPath) {
 }
 
 function traverseForEach(itemPath) {
-    deleteSignature(itemPath);
+    clearSignature(itemPath);
     return 0;
 }
 

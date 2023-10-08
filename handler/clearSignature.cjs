@@ -3,7 +3,7 @@ const fs = require('fs');
 // utils
 const isJsOrTs = require('../utils/isJsOrTs.cjs');
 
-function deleteSignature(itemPath) {
+function clearSignature(itemPath) {
     // console.log(content);
     if (isJsOrTs(itemPath)) {
         const content = fs.readFileSync(itemPath, 'utf-8');
@@ -23,4 +23,4 @@ function deleteSignature(itemPath) {
     return 0;
 }
 
-module.exports = deleteSignature;
+module.exports = clearSignature;
