@@ -1,12 +1,13 @@
 {
     "name": "@zhenyu184/chris-tool",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "",
     "main": "index.js",
     "bin": {
         "chris": "./bin/cli.cjs"
     },
     "scripts": {
+        "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
