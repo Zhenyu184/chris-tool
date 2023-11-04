@@ -8,8 +8,16 @@ const file = require('../utils/fileOperations.cjs');
 //     return 0;
 // }
 
-async function traverseDirectory(directoryPath) {
-    let count = 0;
+async function traverseDirectory(
+    directoryPath,
+    filterFunc = () => {
+        return true;
+    }
+) {
+    const ret = {
+        pathList: [],
+        count: 0,
+    };
 
     const traverse = async (itemPath) => {
         const stats = fs.statSync(itemPath);
@@ -21,12 +29,15 @@ async function traverseDirectory(directoryPath) {
             }
         } else {
             // console.log('File:', itemPath);
-            count++;
+            if (filterFunc(itemPath)) {
+                ret.pathList.push(itemPath);
+                ret.count++;
+            }
         }
     };
 
     await traverse(directoryPath);
-    return count;
+    return ret;
 }
 
 async function createFileAndTraverse() {

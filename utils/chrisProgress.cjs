@@ -53,11 +53,9 @@ function colorizeStringByValue(str, value) {
     console.log();
 }
 
-function main() {
-    console.log('chris 01');
-    colorizeStringByValue(graph(), 700);
+function progress(rate) {
+    colorizeStringByValue(graph(), rate);
 }
 
-main();
-
-module.exports = main;
+exports.progress = progress;
+exports.graph = graph;
