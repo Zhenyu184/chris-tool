@@ -2,16 +2,18 @@
     "debug": {
         "handler": {
             "clear": {
-                "searchString": ["Chris"],
-                "exclude": ["Christopher"]
+                "searchString": ["Chris.Yang"],
+                "exclude": ["Christopher"],
+                "replace": "Stanley.Yang"
             }
         }
     },
     "release": {
         "handler": {
             "clear": {
-                "searchString": ["Chris"],
-                "exclude": ["Christopher"]
+                "searchString": ["Chris.Yang"],
+                "exclude": ["Christopher"],
+                "replace": "Tim.Hsu"
             }
         }
     }
