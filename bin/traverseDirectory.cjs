@@ -20,13 +20,12 @@ async function traverseDirectory(directoryPath) {
                 await traverse(subItemPath);
             }
         } else {
-            console.log('File:', itemPath);
+            // console.log('File:', itemPath);
             count++;
         }
     };
 
     await traverse(directoryPath);
-
     return count;
 }
 

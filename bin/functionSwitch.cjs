@@ -1,7 +1,7 @@
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
 const traverseDirectory = require('./traverseDirectory.cjs');
 
-function functionSwitch(argumentsArr) {
+async function functionSwitch(argumentsArr) {
     // Check first argument
     if (!argumentsArr[0]) {
         console.warn('main argument is empty or null');
@@ -11,16 +11,24 @@ function functionSwitch(argumentsArr) {
 
     switch (mainFunction) {
         case 'clear':
+            // Load arguments (directory path)
             const rootPath = argumentsArr[1];
+
+            // Check if argument exists
             if (!rootPath) {
-                console.warn('not valid directory path');
+                console.warn('the directory path is empty');
                 return;
             }
+
+            // Check if arguments are valid
             if (!validDirectoryPath(rootPath)) {
                 console.warn('not valid directory path');
                 return;
             }
-            const totalFileAmount = traverseDirectory(rootPath);
+
+            // Access all files in this directory
+            const totalFileAmount = await traverseDirectory(rootPath);
+
             console.log('scan to', totalFileAmount, 'files');
             break;
         default:
