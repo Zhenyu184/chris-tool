@@ -17,7 +17,7 @@ function graph() {
     return ret;
 }
 
-function aaa(str) {
+function colorizeStringByTime(str) {
     let currentIndex = 0;
     const interval = setInterval(() => {
         if (currentIndex >= str.length) {
@@ -33,9 +33,29 @@ function aaa(str) {
     }, 20);
 }
 
+function colorizeStringByValue(str, value) {
+    if (value < 0) {
+        value = 0;
+    } else if (value > 1000) {
+        value = 1000;
+    }
+
+    const maxColorValue = 1000;
+    const currentIndex = Math.floor((str.length * value) / maxColorValue);
+
+    for (let i = 0; i < str.length; i++) {
+        if (i < currentIndex) {
+            process.stdout.write('\x1b[34m' + str[i] + '\x1b[0m'); // blue
+        } else {
+            process.stdout.write(str[i]); // white
+        }
+    }
+    console.log();
+}
+
 function main() {
     console.log('chris 01');
-    aaa(graph());
+    colorizeStringByValue(graph(), 700);
 }
 
 main();
