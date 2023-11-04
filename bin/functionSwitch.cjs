@@ -1,6 +1,6 @@
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
 const traverseDirectory = require('./traverseDirectory.cjs');
-const clearSignature2 = require('../handler/clearSignature2.cjs');
+const clearSignature = require('../handler/clearSignature.cjs');
 const isJsExtension = require('../utils/isJsOrTs.cjs');
 
 async function functionSwitch(argumentsArr) {
@@ -34,7 +34,7 @@ async function functionSwitch(argumentsArr) {
             console.log(`scan to ${traverseResult.count} files`);
 
             // Access all files in this directory
-            clearSignature2(traverseResult.pathList, traverseResult.count);
+            clearSignature(traverseResult.pathList, traverseResult.count);
 
             break;
         default:

@@ -27,23 +27,25 @@ function searchString(sourceString) {
 }
 
 function filterComment(sourceFileContent) {
-    const commentPattern = /\/\*[\s\S]*?\*\/|\/\/.*/g; //註解
+    const commentPattern = /\/\*[\s\S]*?\*\/|\/\/.*/g; //comment
     return sourceFileContent.match(commentPattern);
 }
 
-function clearSignature(itemPath) {
-    // console.log(content);
-    if (isJsOrTs(itemPath)) {
-        const fileContent = fs.readFileSync(itemPath, 'utf-8');
+function clearSignature(pathList, count) {
+    //console.log(pathList, count);
+
+    pathList.forEach((element) => {
+        const fileContent = fs.readFileSync(element, 'utf-8');
         const commentArr = filterComment(fileContent);
         if (commentArr) {
             commentArr.forEach((element) => {
                 if (searchString(element)) {
-                    // console.log(element);
+                    console.log(element);
                 }
             });
         }
-    }
+    });
+
     return 0;
 }
 
