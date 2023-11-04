@@ -17,7 +17,7 @@
     "author": "Chris",
     "license": "ISC",
     "dependencies": {
-        "ascii-art": "^2.8.5",
+        "chalk": "^5.3.0",
         "terminal-kit": "^3.0.1",
         "yargs": "^17.7.2"
     }
