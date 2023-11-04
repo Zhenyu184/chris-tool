@@ -53,8 +53,12 @@ function colorizeStringByValue(str, value) {
     console.log();
 }
 
-function progress(rate) {
+function progress(rate, cleanDisplay = false) {
+    if (cleanDisplay) {
+        process.stdout.write('\x1Bc');
+    }
     colorizeStringByValue(graph(), rate);
+    process.stdout.write(`Processed: ${(rate / 10).toFixed(1)}%`);
 }
 
 exports.progress = progress;

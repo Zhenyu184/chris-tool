@@ -1,5 +1,6 @@
 const fs = require('fs');
 const config = require('../toolConfig.json');
+const chrisGraph = require('../utils/chrisProgress.cjs');
 
 // utils
 const isJsOrTs = require('../utils/isJsOrTs.cjs');
@@ -34,16 +35,17 @@ function filterComment(sourceFileContent) {
 function clearSignature(pathList, count) {
     //console.log(pathList, count);
 
-    pathList.forEach((element) => {
+    pathList.forEach((element, index) => {
         const fileContent = fs.readFileSync(element, 'utf-8');
         const commentArr = filterComment(fileContent);
         if (commentArr) {
             commentArr.forEach((element) => {
                 if (searchString(element)) {
-                    console.log(element);
+                    //console.log(element);
                 }
             });
         }
+        chrisGraph.progress(((index + 1) / count) * 1000, true);
     });
 
     return 0;
