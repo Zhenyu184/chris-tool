@@ -37,7 +37,7 @@ function filterComment(sourceFileContent) {
 function spaceCompensation(replaced, replace, safeSpace = 1) {
     const diff = replaced.length - replace.length;
     let safeSpaceFlag = false;
-    if (replace.length + safeSpace >= replaced.length) {
+    if (replaced.length + safeSpace <= replace.length) {
         safeSpaceFlag = true;
     }
 
@@ -62,6 +62,36 @@ function spaceCompensation(replaced, replace, safeSpace = 1) {
     }
 }
 
+function calculateSafeSpaceLen(inputString, targetSubstring) {
+    const pattern = new RegExp(`${targetSubstring}\\s+`, 'g');
+    const matches = inputString.match(pattern);
+
+    if (matches && matches.length > 0) {
+        const minWhitespaceLength = Math.min(...matches.map((match) => match.length - targetSubstring.length));
+
+        return minWhitespaceLength;
+    }
+    return 0; // 如果未找到匹配，返回 0
+}
+
+function replaceString(commentString) {
+    let replacedString = commentString;
+    console.log(commentString);
+    ENV_CONFIG.searchString.forEach((element) => {
+        // Todo: Compensation Limitations
+        const safeSpaceLen = calculateSafeSpaceLen(commentString, element);
+
+        // Space compensation
+        const compensated = spaceCompensation(element, ENV_CONFIG.replace, safeSpaceLen);
+        console.log(`"${compensated.replaced}"   "${compensated.replace}"`);
+
+        const replacedRegExp = new RegExp(compensated.replaced, 'g');
+        replacedString = replacedString.replace(replacedRegExp, compensated.replace);
+    });
+    console.log(replacedString);
+    console.log();
+}
+
 function clearSignature(pathList, count) {
     //console.log(pathList, count);
 
@@ -71,27 +101,14 @@ function clearSignature(pathList, count) {
 
         // Filter out the Comment section
         const commentArr = filterComment(fileContent);
+
+        // Find a string to replace
         if (commentArr) {
             commentArr.forEach((element) => {
                 // Filter out the specified string
                 if (searchString(element)) {
-                    const searchList = ENV_CONFIG.searchString;
-                    let replacedString = element;
-
-                    // 取代字串
-                    console.log(element);
-                    searchList.forEach((element) => {
-                        // Todo: Compensation Limitations
-
-                        // Space compensation
-                        const compensated = spaceCompensation(element, ENV_CONFIG.replace);
-                        console.log(`"${compensated.replaced}"   "${compensated.replace}"`);
-
-                        const replacedRegExp = new RegExp(compensated.replaced, 'g');
-                        replacedString = replacedString.replace(replacedRegExp, compensated.replace);
-                    });
-                    console.log(replacedString);
-                    console.log();
+                    // Replace string
+                    replaceString(element);
 
                     // 寫回
                 }

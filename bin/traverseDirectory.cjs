@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const clearSignature = require('../handler/clearSignature.cjs');
+
+// utils
 const file = require('../utils/fileOperations.cjs');
 
 // function traverseForEach(itemPath) {
