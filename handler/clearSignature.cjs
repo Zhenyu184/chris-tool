@@ -39,7 +39,7 @@ function clearSignature(itemPath) {
         if (commentArr) {
             commentArr.forEach((element) => {
                 if (searchString(element)) {
-                    console.log(element);
+                    // console.log(element);
                 }
             });
         }

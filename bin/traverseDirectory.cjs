@@ -3,27 +3,52 @@ const path = require('path');
 const clearSignature = require('../handler/clearSignature.cjs');
 const file = require('../utils/fileOperations.cjs');
 
-function traverseForEach(itemPath) {
-    clearSignature(itemPath);
-    return 0;
-}
+// function traverseForEach(itemPath) {
+//     clearSignature(itemPath);
+//     return 0;
+// }
 
-function traverseDirectory(directoryPath) {
-    const items = fs.readdirSync(directoryPath);
+async function traverseDirectory(directoryPath) {
     let count = 0;
-    items.forEach((item) => {
-        const itemPath = path.join(directoryPath, item);
+
+    const traverse = async (itemPath) => {
         const stats = fs.statSync(itemPath);
         if (stats.isDirectory()) {
-            count += traverseDirectory(itemPath);
+            const items = fs.readdirSync(itemPath);
+            for (const item of items) {
+                const subItemPath = path.join(itemPath, item);
+                await traverse(subItemPath);
+            }
         } else {
-            // console.log('File:', itemPath);
-            traverseForEach(itemPath);
+            console.log('File:', itemPath);
             count++;
         }
-    });
+    };
+
+    await traverse(directoryPath);
+
     return count;
 }
 
-file.createFile('../tmp/aaa.tmp');
+async function createFileAndTraverse() {
+    try {
+        // Example data to write to the JSON file
+        const exampleData = {
+            name: 'John Doe',
+            age: 30,
+            email: 'john@example.com',
+        };
+        const jsonData = JSON.stringify(exampleData, null, 2);
+
+        const count = await traverseDirectory('../your_directory_path_here');
+        console.log('Traversal complete. Files count:', count);
+
+        // Create the file after traversal is complete
+        await file.createFile('../tmp/aaa.tmp', jsonData);
+        console.log('File created successfully.');
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 module.exports = traverseDirectory;

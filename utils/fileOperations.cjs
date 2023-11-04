@@ -5,7 +5,7 @@ const path = require('path');
 function createFile(filePath = 'createFile.tmp', WriteData = '') {
     try {
         const tempFilePath = path.join(__dirname, filePath);
-        fs.writeFileSync(tempFilePath, WriteData);
+        fs.writeFileSync(tempFilePath, WriteData, 'utf-8');
         return tempFilePath;
     } catch (err) {
         return null;

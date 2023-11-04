@@ -1,8 +1,16 @@
 # chris-tool
 
 ```
+npm i . -g
+```
+
+```
 chris clear <path>
 ```
+
+### Publish to npm
+
+`npm login`
 
 ### Windows PowerSell issueS
 
