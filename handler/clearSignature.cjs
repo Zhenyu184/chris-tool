@@ -150,7 +150,7 @@ function clearSignature(pathList, count) {
         }
 
         // Processing progress animation
-        chrisGraph.progress(((index + 1) / count) * 1000, element, true);
+        chrisGraph.progress(((index + 1) / count) * 1000, element, 0);
     });
 
     return 0;

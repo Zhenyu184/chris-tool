@@ -12,6 +12,8 @@ chris clear <path>
 
 `npm login`
 
+`npm publish --access public`
+
 ### Windows PowerSell issueS
 
 https://israynotarray.com/other/20200510/1067127387/

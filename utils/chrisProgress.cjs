@@ -17,6 +17,11 @@ function graph() {
     return ret;
 }
 
+function simpleGraph() {
+    const ret = `■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■`;
+    return ret;
+}
+
 function colorizeStringByTime(str) {
     let currentIndex = 0;
     const interval = setInterval(() => {
@@ -50,14 +55,18 @@ function colorizeStringByValue(str, value) {
             process.stdout.write(str[i]); // white
         }
     }
-    console.log();
 }
 
-function progress(rate, msg = '', cleanDisplay = false) {
-    if (cleanDisplay) {
-        process.stdout.write('\x1Bc');
-    }
+function progress(rate, msg = '', previousRate = 0) {
+    // Clean Terminal
+    cls();
+
+    // Print progress graph
+    console.log();
     colorizeStringByValue(graph(), rate);
+    console.log();
+    //colorizeStringByValue(simpleGraph(), rate);
+    //console.log();
     process.stdout.write(`Processing:\t${msg}\n`);
     process.stdout.write(`Rate:\t\t${(rate / 10).toFixed(1)}%`);
 }
