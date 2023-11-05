@@ -74,22 +74,46 @@ function calculateSafeSpaceLen(inputString, targetSubstring) {
     return 0; // 如果未找到匹配，返回 0
 }
 
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function replaceTextInFile(filePath, replacedText, replaceText, callback) {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        // Handling errors in asynchronous operations
+        if (err) {
+            return callback(err);
+        }
+
+        // Escape special characters in replacedText and use it to build a regular expression
+        const escapedReplacedText = escapeRegExp(replacedText);
+        const regex = new RegExp(escapedReplacedText, 'g');
+
+        // Replace and write back
+        const modifiedData = data.replace(regex, replaceText);
+        fs.writeFile(filePath, modifiedData, 'utf8', (err) => {
+            if (err) {
+                return callback(err);
+            }
+            callback(null, 'Replace successful');
+        });
+    });
+}
+
 function replaceString(commentString) {
     let replacedString = commentString;
-    console.log(commentString);
     ENV_CONFIG.searchString.forEach((element) => {
         // Todo: Compensation Limitations
         const safeSpaceLen = calculateSafeSpaceLen(commentString, element);
 
         // Space compensation
         const compensated = spaceCompensation(element, ENV_CONFIG.replace, safeSpaceLen);
-        console.log(`"${compensated.replaced}"   "${compensated.replace}"`);
 
+        // Write back
         const replacedRegExp = new RegExp(compensated.replaced, 'g');
         replacedString = replacedString.replace(replacedRegExp, compensated.replace);
     });
-    console.log(replacedString);
-    console.log();
+    return replacedString;
 }
 
 function clearSignature(pathList, count) {
@@ -97,7 +121,8 @@ function clearSignature(pathList, count) {
 
     pathList.forEach((element, index) => {
         // Read file
-        let fileContent = fs.readFileSync(element, 'utf-8');
+        const currentPath = element;
+        let fileContent = fs.readFileSync(currentPath, 'utf-8');
 
         // Filter out the Comment section
         const commentArr = filterComment(fileContent);
@@ -106,17 +131,26 @@ function clearSignature(pathList, count) {
         if (commentArr) {
             commentArr.forEach((element) => {
                 // Filter out the specified string
-                if (searchString(element)) {
+                const currentComment = element;
+                if (searchString(currentComment)) {
                     // Replace string
-                    replaceString(element);
+                    const replacedComment = replaceString(currentComment);
 
-                    // 寫回
+                    // Write back
+                    replaceTextInFile(currentPath, currentComment, replacedComment, (err, result) => {
+                        if (err) {
+                            console.error('Replace error', err);
+                        } else {
+                            // Replace result
+                            // console.log(result);
+                        }
+                    });
                 }
             });
         }
 
         // Processing progress animation
-        // chrisGraph.progress(((index + 1) / count) * 1000, element, true);
+        chrisGraph.progress(((index + 1) / count) * 1000, element, true);
     });
 
     return 0;

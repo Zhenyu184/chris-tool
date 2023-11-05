@@ -5,11 +5,6 @@ const clearSignature = require('../handler/clearSignature.cjs');
 // utils
 const file = require('../utils/fileOperations.cjs');
 
-// function traverseForEach(itemPath) {
-//     clearSignature(itemPath);
-//     return 0;
-// }
-
 async function traverseDirectory(
     directoryPath,
     filterFunc = () => {
