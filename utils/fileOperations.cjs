@@ -31,6 +31,9 @@ function deleteFile(filePath) {
     }
 }
 
-exports.createFile = createFile;
-exports.readFile = readFile;
-exports.deleteFile = deleteFile;
+// exports.createFile = createFile;
+// exports.readFile = readFile;
+// exports.deleteFile = deleteFile;
+module.exports = createFile;
+module.exports = readFile;
+module.exports = deleteFile;

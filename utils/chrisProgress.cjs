@@ -71,5 +71,7 @@ function progress(rate, msg = '', previousRate = 0) {
     process.stdout.write(`Rate:\t\t${(rate / 10).toFixed(1)}%`);
 }
 
-exports.progress = progress;
-exports.graph = graph;
+// exports.progress = progress;
+// exports.graph = graph;
+module.exports = progress;
+module.exports = graph;
