@@ -2,10 +2,26 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const JScrewIt = require('jscrewit'); // CommonJS syntax
 const chrisGraph = require('../utils/chrisProgress.cjs');
+const isJs = require('../utils/isJs.cjs');
 
 function compile(filePath) {
-    const output = JScrewIt.encode('alert(1)');
-    console.log(output);
+    // 讀取原始檔案內容
+    fs.readFile(filePath, 'utf8', (readError, input) => {
+        if (readError) {
+            console.error(`Error reading file: ${readError}`);
+            return;
+        }
+
+        // 使用 JScrewIt 編碼
+        const output = JScrewIt.encode(input);
+
+        // 將編碼後的內容寫回原檔案
+        fs.writeFile(filePath, output, 'utf8', (writeError) => {
+            if (writeError) {
+                console.error(`Error writing file: ${writeError}`);
+            }
+        });
+    });
 }
 
 function compile2JsFuck(pathList, count) {
@@ -15,11 +31,13 @@ function compile2JsFuck(pathList, count) {
         // Read file
         const currentPath = element;
 
-        // Compile to
-        compile(currentPath);
+        if (isJs(currentPath)) {
+            // Compile to
+            compile(currentPath);
+        }
 
         // Processing progress animation
-        // chrisGraph.progress(((index + 1) / count) * 1000, element, 0);
+        chrisGraph.progress(((index + 1) / count) * 1000, element, 0);
     });
 
     return 0;

@@ -1,4 +1,4 @@
 const JScrewIt = require('jscrewit'); // CommonJS syntax
 
-const output = JScrewIt.encode('alert(1)');
+const output = JScrewIt.encode(input);
 console.log(output);
