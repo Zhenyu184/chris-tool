@@ -10,6 +10,7 @@ async function functionSwitch(argumentsArr) {
         return false;
     }
     const mainFunction = argumentsArr[0].toLowerCase();
+    console.log(`chris`, mainFunction);
     // Load arguments (directory path)
     const rootPath = argumentsArr[1];
 
@@ -40,7 +41,7 @@ async function functionSwitch(argumentsArr) {
             // Access all files in this directory
             clearSignature(traverseResult.pathList, traverseResult.count);
             break;
-        case `fuck`:
+        case `constrict`:
             break;
         default:
             console.log(`sorry ${mainFunction} is not legal main function`);
@@ -50,4 +51,4 @@ async function functionSwitch(argumentsArr) {
 }
 
 //exports.functionSwitch = functionSwitch;
-module.exports = functionSwitch();
+module.exports = functionSwitch;

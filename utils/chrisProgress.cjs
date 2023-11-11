@@ -73,5 +73,7 @@ function progress(rate, msg = '', previousRate = 0) {
 
 // exports.progress = progress;
 // exports.graph = graph;
-module.exports = progress;
-module.exports = graph;
+module.exports = {
+    progress,
+    graph,
+};

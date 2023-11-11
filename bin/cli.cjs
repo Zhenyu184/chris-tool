@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
-const { functionSwitch } = require('./functionSwitch.cjs');
-const chrisGraph = require('../utils/chrisProgress.cjs');
+const functionSwitch = require('./functionSwitch.cjs');
+const { graph, progress } = require('../utils/chrisProgress.cjs');
 
 // Fetch arguments
 function fetchArgument() {
@@ -11,7 +11,7 @@ function fetchArgument() {
 
 function main() {
     const argv = fetchArgument();
-    console.log(chrisGraph.graph());
+    console.log(graph());
 
     return functionSwitch(argv);
 }
