@@ -4,5 +4,7 @@ const helloText = `Hello the following is a user guide.
     \n#2 Install if clone from the source code. 
     > npm i . -g
     \n#3 Execute it using the command.
-    > myCli <path>`;
+    > chris clean <path>
+    > chris fuck <path>
+`;
 exports.helloText = helloText;
