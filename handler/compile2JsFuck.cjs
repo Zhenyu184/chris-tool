@@ -1,4 +1,5 @@
 const fs = require('fs');
+const jsfuck = require('jsfuck');
 const { exec } = require('child_process');
 const chrisGraph = require('../utils/chrisProgress.cjs');
 
@@ -10,26 +11,43 @@ function compile(filePath) {
             return;
         }
 
-        // 組合 Closure Compiler 命令
-        const command = `closure-compiler --js ${filePath}`;
+        // 檢查檔案類型，js 或 ts
+        const isTypeScript = filePath.endsWith('.ts');
 
-        // 執行 Closure Compiler 命令
-        exec(command, (compilerError, stdout, stderr) => {
-            if (compilerError) {
-                console.error(`Error during compilation: ${compilerError}`);
-                return;
-            }
+        if (isTypeScript) {
+            // 如果是 TypeScript，使用 ts-node 將其轉換為 JavaScript
+            exec(`npx ts-node --compiler npx-tsc -e "${data}"`, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error during TypeScript compilation: ${error}`);
+                    return;
+                }
+
+                const transformedCode = jsfuck.encode(stdout);
+
+                // 將編譯後的內容寫回原始檔案
+                fs.writeFile(filePath, transformedCode, 'utf8', (writeError) => {
+                    if (writeError) {
+                        console.error(`Error writing file: ${writeError}`);
+                    } else {
+                        console.log(`JSFuck transformation and save successful!`);
+                        console.log(`Output file: ${filePath}`);
+                    }
+                });
+            });
+        } else {
+            // 如果是 JavaScript，直接使用 JSFuck 將其轉換
+            const transformedCode = jsfuck.encode(data);
 
             // 將編譯後的內容寫回原始檔案
-            fs.writeFile(filePath, stdout, 'utf8', (writeError) => {
+            fs.writeFile(filePath, transformedCode, 'utf8', (writeError) => {
                 if (writeError) {
                     console.error(`Error writing file: ${writeError}`);
                 } else {
-                    console.log(`Compilation and save successful!`);
+                    console.log(`JSFuck transformation and save successful!`);
                     console.log(`Output file: ${filePath}`);
                 }
             });
-        });
+        }
     });
 }
 

@@ -68,7 +68,7 @@ function progress(rate, msg = '', previousRate = 0) {
     //colorizeStringByValue(simpleGraph(), rate);
     //console.log();
     process.stdout.write(`Processing:\t${msg}\n`);
-    process.stdout.write(`Rate:\t\t${(rate / 10).toFixed(1)}%`);
+    process.stdout.write(`Rate:\t\t${(rate / 10).toFixed(1)}%\n\n`);
 }
 
 // exports.progress = progress;
