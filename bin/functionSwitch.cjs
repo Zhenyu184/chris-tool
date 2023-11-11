@@ -1,6 +1,8 @@
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
 const traverseDirectory = require('./traverseDirectory.cjs');
 const clearSignature = require('../handler/clearSignature.cjs');
+const compile2JsFuck = require('../handler/compile2JsFuck.cjs');
+const compile2JsConstrict = require('../handler/compile2JsConstrict.cjs');
 const isJsExtension = require('../utils/isJsOrTs.cjs');
 
 async function functionSwitch(argumentsArr) {
@@ -39,9 +41,11 @@ async function functionSwitch(argumentsArr) {
             break;
         case `fuck`:
             // Access all files in this directory
-            clearSignature(traverseResult.pathList, traverseResult.count);
+            compile2JsFuck(traverseResult.pathList, traverseResult.count);
             break;
         case `constrict`:
+            // Access all files in this directory
+            compile2JsConstrict(traverseResult.pathList, traverseResult.count);
             break;
         default:
             console.log(`sorry ${mainFunction} is not legal main function`);
