@@ -47,6 +47,8 @@ async function functionSwitch(argumentsArr) {
             // Access all files in this directory
             compile2JsConstrict(traverseResult.pathList, traverseResult.count);
             break;
+        case `sdr`:
+            break;
         default:
             console.log(`sorry ${mainFunction} is not legal main function`);
             return false;
