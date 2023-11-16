@@ -1,3 +1,4 @@
+const packageJson = require('../package.json');
 const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
 const traverseDirectory = require('./traverseDirectory.cjs');
 const clearSignature = require('../handler/clearSignature.cjs');
@@ -12,7 +13,20 @@ async function functionSwitch(argumentsArr) {
         return false;
     }
     const mainFunction = argumentsArr[0].toLowerCase();
-    console.log(`chris`, mainFunction);
+    switch (mainFunction) {
+        case `hi`:
+            // hello Chris
+            console.log(`Hi! Chris`);
+            break;
+        case `V`:
+        case `v`:
+        case `Version`:
+        case `version`:
+            console.log(`Hi! Chris ${packageJson.version}`);
+            break;
+        default:
+    }
+
     // Load arguments (directory path)
     const rootPath = argumentsArr[1];
 
@@ -34,10 +48,13 @@ async function functionSwitch(argumentsArr) {
     console.log(`scan to ${traverseResult.count} files`);
 
     switch (mainFunction) {
+        case `hi`:
+            // hello Chris
+            console.log(`Hi! Chris`);
+            break;
         case `clear`:
             // Access all files in this directory
             clearSignature(traverseResult.pathList, traverseResult.count);
-
             break;
         case `fuck`:
             // Access all files in this directory
