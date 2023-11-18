@@ -1,29 +1,31 @@
-const packageJson = require('../package.json');
-const validDirectoryPath = require('../utils/validDirectoryPath.cjs');
-const traverseDirectory = require('./traverseDirectory.cjs');
-const clearSignature = require('../handler/clearSignature.cjs');
-const compile2JsFuck = require('../handler/compile2JsFuck.cjs');
-const compile2JsConstrict = require('../handler/compile2JsConstrict.cjs');
-const isJsExtension = require('../utils/isJsOrTs.cjs');
+const packageJson = require(`../package.json`);
+const validDirectoryPath = require(`../utils/validDirectoryPath.cjs`);
+const traverseDirectory = require(`./traverseDirectory.cjs`);
+const clearSignature = require(`../handler/clearSignature.cjs`);
+const compile2JsFuck = require(`../handler/compile2JsFuck.cjs`);
+const compile2JsConstrict = require(`../handler/compile2JsConstrict.cjs`);
+const isJsExtension = require(`../utils/isJsOrTs.cjs`);
 
 async function functionSwitch(argumentsArr) {
     // Check first argument
     if (!argumentsArr[0]) {
-        console.warn('main argument is empty or null');
+        console.warn(`main argument is empty or null`);
         return false;
     }
     const mainFunction = argumentsArr[0].toLowerCase();
     switch (mainFunction) {
         case `hi`:
-            // hello Chris
             console.log(`Hi! Chris`);
-            break;
+            return;
+        case `say`:
+            console.log(`Chris say ${argumentsArr[1]}`);
+            return;
         case `V`:
         case `v`:
         case `Version`:
         case `version`:
-            console.log(`Hi! Chris ${packageJson.version}`);
-            break;
+            console.log(`version ${packageJson.version}`);
+            return;
         default:
     }
 

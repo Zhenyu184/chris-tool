@@ -1,8 +1,8 @@
-const fs = require('fs');
-const { exec } = require('child_process');
-const JScrewIt = require('jscrewit'); // CommonJS syntax
-const chrisGraph = require('../utils/chrisProgress.cjs');
-const isJs = require('../utils/isJs.cjs');
+const fs = require(`fs`);
+const { exec } = require(`child_process`);
+const JScrewIt = require(`jscrewit`);
+const chrisGraph = require(`../utils/chrisProgress.cjs`);
+const isJs = require(`../utils/isJs.cjs`);
 
 function compile(filePath) {
     // 讀取原始檔案內容

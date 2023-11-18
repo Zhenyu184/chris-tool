@@ -1,6 +1,6 @@
-const fs = require('fs');
-const { exec } = require('child_process');
-const chrisGraph = require('../utils/chrisProgress.cjs');
+const fs = require(`fs`);
+const { exec } = require(`child_process`);
+const chrisGraph = require(`../utils/chrisProgress.cjs`);
 
 function compile(filePath) {
     // 讀取原始檔案內容

@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require(`fs`);
+const path = require(`path`);
 
 // utils
-const file = require('../utils/fileOperations.cjs');
+const file = require(`../utils/fileOperations.cjs`);
 
 async function traverseDirectory(
     directoryPath,
@@ -40,18 +40,18 @@ async function createFileAndTraverse() {
     try {
         // Example data to write to the JSON file
         const exampleData = {
-            name: 'John Doe',
+            name: `John Doe`,
             age: 30,
-            email: 'john@example.com',
+            email: `john@example.com`,
         };
         const jsonData = JSON.stringify(exampleData, null, 2);
 
-        const count = await traverseDirectory('../your_directory_path_here');
-        console.log('Traversal complete. Files count:', count);
+        const count = await traverseDirectory(`../your_directory_path_here`);
+        console.log(`Traversal complete. Files count:`, count);
 
         // Create the file after traversal is complete
-        await file.createFile('../tmp/aaa.tmp', jsonData);
-        console.log('File created successfully.');
+        await file.createFile(`../tmp/aaa.tmp`, jsonData);
+        console.log(`File created successfully.`);
     } catch (error) {
         console.error('Error:', error);
     }

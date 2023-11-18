@@ -1,7 +1,7 @@
-const readline = require('readline');
-const { exec } = require('child_process');
+const readline = require(`readline`);
+const { exec } = require(`child_process`);
 
-const { helloText } = require('./helloText.cjs');
+const { helloText } = require(`./helloText.cjs`);
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 });
 
 // 根據使用者輸入執行相應的程式
-const exe = rl.question('請輸入要執行的程式名稱：', (programName) => {
+const exe = rl.question(`請輸入要執行的程式名稱：`, (programName) => {
     const command = `node bin/cli.cjs ${programName}`;
 
     exec(command, (error, stdout, stderr) => {

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const yargs = require('yargs');
-const functionSwitch = require('./functionSwitch.cjs');
-const { graph } = require('../utils/chrisProgress.cjs');
+const yargs = require(`yargs`);
+const functionSwitch = require(`./functionSwitch.cjs`);
+const { graph } = require(`../utils/chrisProgress.cjs`);
 
 // Fetch arguments
 function fetchArgument() {
