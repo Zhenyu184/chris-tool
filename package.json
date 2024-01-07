@@ -15,7 +15,7 @@
         "package"
     ],
     "author": "Chris",
-    "license": "ISC",
+    "license": "MPL-2.0",
     "dependencies": {
         "chalk": "^4.1.2",
         "google-closure-compiler": "^20230802.0.0",
